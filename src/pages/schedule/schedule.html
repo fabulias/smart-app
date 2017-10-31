@@ -20,10 +20,10 @@
           </ion-icon>
           <ion-label range-right>
             <div *ngIf="quantity1; else other_quantity1">
-              <p style="font-size:30px;color:#AED581">{{quantity1/2}}</p>
+              <p style="font-size:40px;color:#AED581">{{quantity1/2}}</p>
             </div>
             <ng-template #other_quantity1>
-              <p style="font-size:30px">0</p>
+              <p style="font-size:40px;color:black">0</p>
             </ng-template>
           </ion-label>
         </ion-range>
@@ -32,7 +32,7 @@
         <ion-label>
           <ion-icon name="md-time" style="font-size:50px"></ion-icon>
         </ion-label>
-        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts1"></ion-datetime>
+        <ion-datetime style="font-size:40px" displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts1"></ion-datetime>
       </ion-item>
       <ion-item-divider color="light" id="horario-list-item-divider5">
         <ion-list-header>
@@ -46,10 +46,10 @@
           </ion-icon>
           <ion-label range-right>
             <div *ngIf="quantity2; else other_quantity2">
-              <p style="font-size:30px;color:#AED581">{{quantity2/2}}</p>
+              <p style="font-size:40px;color:#AED581">{{quantity2/2}}</p>
             </div>
             <ng-template #other_quantity2>
-              <p style="font-size:30px">0</p>
+              <p style="font-size:40px;color:black">0</p>
             </ng-template>
           </ion-label>
         </ion-range>
@@ -58,7 +58,7 @@
         <ion-label>
           <ion-icon name="md-time" style="font-size:50px"></ion-icon>
         </ion-label>
-        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts2"></ion-datetime>
+        <ion-datetime style="font-size:40px" displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts2"></ion-datetime>
       </ion-item>
       <ion-item-divider color="light" id="horario-list-item-divider4">
         <ion-list-header>
@@ -72,10 +72,10 @@
           </ion-icon>
           <ion-label range-right>
             <div *ngIf="quantity3; else other_quantity3">
-              <p style="font-size:30px;color:#AED581">{{quantity3/2}}</p>
+              <p style="font-size:40px;color:#AED581">{{quantity3/2}}</p>
             </div>
             <ng-template #other_quantity3>
-              <p style="font-size:30px">0</p>
+              <p style="font-size:40px;color:black">0</p>
             </ng-template>
           </ion-label>
         </ion-range>
@@ -84,7 +84,7 @@
         <ion-label>
           <ion-icon name="md-time" style="font-size:50px"></ion-icon>
         </ion-label>
-        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts3"></ion-datetime>
+        <ion-datetime style="font-size:40px" displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts3"></ion-datetime>
       </ion-item>
       <ion-item-divider color="light" id="horario-list-item-divider6">
         <ion-list-header>
@@ -98,10 +98,10 @@
           </ion-icon>
           <ion-label range-right>
             <div *ngIf="quantity4; else other_quantity4">
-              <p style="font-size:30px;color:#AED581">{{quantity4/2}}</p>
+              <p style="font-size:40px;color:#AED581">{{quantity4/2}}</p>
             </div>
             <ng-template #other_quantity4>
-              <p style="font-size:30px">0</p>
+              <p style="font-size:40px;color:black">0</p>
             </ng-template>
           </ion-label>
         </ion-range>
@@ -110,7 +110,7 @@
         <ion-label>
           <ion-icon name="md-time" style="font-size:50px"></ion-icon>
         </ion-label>
-        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts4"></ion-datetime>
+        <ion-datetime style="font-size:40px" displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts4"></ion-datetime>
       </ion-item>
     </ion-list>
     <div class="spacer" style="width:300px;height:21px;" id="horario-spacer6"></div>
