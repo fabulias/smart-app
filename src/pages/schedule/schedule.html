@@ -9,76 +9,105 @@
   <div id="horario-container2">
     <ion-list id="horario-list9">
       <ion-item-divider color="light" id="horario-list-item-divider3">
-        Primera comida
+        <ion-list-header>
+          <h2>PRIMERA COMIDA</h2>
+        </ion-list-header>
       </ion-item-divider>
       <ion-item id="horario-range1">
-        <ion-range min="0" max="3" step="0.5" color="balanced" value="1" name="ration1">
-          <ion-label range-left>
-            Tazas
+        <ion-range style="padding-left:0px"[(ngModel)]="quantity1" min="0" max="6" step="1" color="balanced" value="0" name="ration1">
+          <ion-icon range-left>
+            <img src="assets/imgs/cup.svg" alt="" height="40px" width="40px">
+          </ion-icon>
+          <ion-label range-right>
+            <div *ngIf="quantity1; else other_quantity1">
+              <p style="font-size:30px;color:#AED581">{{quantity1/2}}</p>
+            </div>
+            <ng-template #other_quantity1>
+              <p style="font-size:30px">0</p>
+            </ng-template>
           </ion-label>
         </ion-range>
       </ion-item>
-      <ion-item id="horario-input2">
-        <ion-label>
-          Horario
-        </ion-label>
-        <ion-input type="time" placeholder="00:00" name="date1"></ion-input>
+      <ion-item>
+        <ion-label><ion-icon name="md-time" style="font-size:50px"></ion-icon></ion-label>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts1"></ion-datetime>
       </ion-item>
       <ion-item-divider color="light" id="horario-list-item-divider5">
-        Segunda comida
+        <ion-list-header>
+          <h2>SEGUNDA COMIDA</h2>
+        </ion-list-header>
       </ion-item-divider>
       <ion-item id="horario-range7">
-        <ion-range min="0" max="3" step="0.5" color="balanced" value="1" name="ration2">
-          <ion-label range-left>
-            Tazas
+        <ion-range style="padding-left:0px" [(ngModel)]="quantity2" min="0" max="6" step="1" color="balanced" value="0" name="ration2">
+          <ion-icon range-left>
+            <img src="assets/imgs/cup.svg" alt="" height="40px" width="40px">
+          </ion-icon>
+          <ion-label range-right>
+            <div *ngIf="quantity2; else other_quantity2">
+              <p style="font-size:30px;color:#AED581">{{quantity2/2}}</p>
+            </div>
+            <ng-template #other_quantity2>
+              <p style="font-size:30px">0</p>
+            </ng-template>
           </ion-label>
         </ion-range>
       </ion-item>
-      <ion-item id="horario-input3">
-        <ion-label>
-          Horario
-        </ion-label>
-        <ion-input type="time" placeholder="00:00" name="date2"></ion-input>
+      <ion-item>
+        <ion-label><ion-icon name="md-time" style="font-size:50px"></ion-icon></ion-label>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts2"></ion-datetime>
       </ion-item>
       <ion-item-divider color="light" id="horario-list-item-divider4">
-        Tercera comida
+        <ion-list-header>
+          <h2>TERCERA COMIDA</h2>
+        </ion-list-header>
       </ion-item-divider>
       <ion-item id="horario-range6">
-        <ion-range [(ngModel)]="quantity" pin="true" min="0" max="3" step="0.5" color="balanced" value="1" name="ration3">
-          <ion-label range-left>
-            Tazas
-          </ion-label>
+        <ion-range style="padding-left:0px" [(ngModel)]="quantity3" min="0" max="6" step="1" color="balanced" value="0" name="ration3">
+          <ion-icon range-left>
+            <img src="assets/imgs/cup.svg" alt="" height="40px" width="40px">
+          </ion-icon>
           <ion-label range-right>
-            {{quantity}}
+            <div *ngIf="quantity3; else other_quantity3">
+              <p style="font-size:30px;color:#AED581">{{quantity3/2}}</p>
+            </div>
+            <ng-template #other_quantity3>
+              <p style="font-size:30px">0</p>
+            </ng-template>
           </ion-label>
         </ion-range>
       </ion-item>
-      <ion-item id="horario-input5">
-        <ion-label>
-          Horario
-        </ion-label>
-        <ion-input type="time" placeholder="00:00" name="date3"></ion-input>
+      <ion-item>
+        <ion-label><ion-icon name="md-time" style="font-size:50px"></ion-icon></ion-label>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts3"></ion-datetime>
       </ion-item>
       <ion-item-divider color="light" id="horario-list-item-divider6">
-        Cuarta comida
+        <ion-list-header>
+          <h2>CUARTA COMIDA</h2>
+        </ion-list-header>
       </ion-item-divider>
       <ion-item id="horario-range5">
-        <ion-range min="0" max="3" step="0.5" color="balanced" value="1" name="ration4">
-          <ion-label range-left>
-            Tazas
+        <ion-range style="padding-left:0px" [(ngModel)]="quantity4" min="0" max="6" step="1" color="balanced" value="0" name="ration4">
+          <ion-icon range-left>
+            <img src="assets/imgs/cup.svg" alt="" height="40px" width="40px">
+          </ion-icon>
+          <ion-label range-right>
+            <div *ngIf="quantity4; else other_quantity4">
+              <p style="font-size:30px;color:#AED581">{{quantity4/2}}</p>
+            </div>
+            <ng-template #other_quantity4>
+              <p style="font-size:30px">0</p>
+            </ng-template>
           </ion-label>
         </ion-range>
       </ion-item>
-      <ion-item id="horario-input4">
-        <ion-label>
-          Horario
-        </ion-label>
-        <ion-input type="time" placeholder="00:00" name="date4"></ion-input>
+      <ion-item>
+        <ion-label><ion-icon name="md-time" style="font-size:50px"></ion-icon></ion-label>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="event.timeStarts4"></ion-datetime>
       </ion-item>
     </ion-list>
     <div class="spacer" style="width:300px;height:21px;" id="horario-spacer6"></div>
-    <button id="horario-button2" ion-button color="positive" block icon-left style="font-weight:500;color:#F7F7FA;border-radius:29px 29px 29px 29px;">
-      <ion-icon name="checkmark-circle-outline"></ion-icon>
+    <button id="horario-button2" ion-button color="positive" block icon-left style="font-weight:500;color:#F7F7FA;border-radius:29px 29px 29px 29px;" on-click="presentLoading()">
+      <ion-icon md="ios-send"></ion-icon>
       Activar horario
     </button>
     <div class="spacer" style="width:300px;height:8px;" id="horario-spacer7"></div>
