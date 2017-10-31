@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>SmartFeedr</title>
@@ -17,12 +18,20 @@
 
   <!-- cordova.js required for cordova apps -->
   <script src="cordova.js"></script>
-  <link href="css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
-  <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300"
-      rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+
+  <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBoWYdacmqJdOU3qsVtu6weaeklXm7e5C0",
+      authDomain: "smartfeedr.firebaseapp.com",
+      databaseURL: "https://smartfeedr.firebaseio.com",
+      projectId: "smartfeedr",
+      storageBucket: "smartfeedr.appspot.com",
+      messagingSenderId: "676953056414"
+    };
+    firebase.initializeApp(config);
+  </script>
   <!-- un-comment this code to enable service worker
   <script>
     if ('serviceWorker' in navigator) {
@@ -35,6 +44,7 @@
   <link href="build/main.css" rel="stylesheet">
 
 </head>
+
 <body>
 
   <!-- Ionic's root component and where the app will load -->
@@ -51,4 +61,5 @@
   <script src="build/main.js"></script>
 
 </body>
+
 </html>

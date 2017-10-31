@@ -11,7 +11,7 @@ export class HomePage {
   constructor(public navCtrl: NavController) {
 
   }
-  goToSchedule(params){
+  goToSchedule(params) {
     if (!params) params = {};
     this.navCtrl.push(SchedulePage);
   }
