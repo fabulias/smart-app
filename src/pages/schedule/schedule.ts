@@ -13,6 +13,7 @@ export class SchedulePage {
     timeStarts3: '00:00',
     timeStarts4: '00:00',
   }
+  titles: Array<string> = ['PRIMERA COMIDA', 'SEGUNDA COMIDA', 'TERCERA COMIDA', 'CUARTA COMIDA'];
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController) {
   }
   presentLoading() {
