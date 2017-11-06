@@ -2,5 +2,7 @@
   "name": "smart-app",
   "app_id": "2d3deaef",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }

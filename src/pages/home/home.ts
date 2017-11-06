@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { SchedulePage } from '../schedule/schedule';
 import { HomeProvider } from '../../providers/home/home';
 
@@ -9,27 +9,37 @@ import { HomeProvider } from '../../providers/home/home';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  serve_state:boolean;  //current state
+  serve_state: boolean;  //current state
 
-  constructor(public navCtrl: NavController, public homeProvider: HomeProvider) {
-  	
-  }
-  ngOnInit(){
-  	this.homeProvider.state().subscribe(data=>{
-  		this.serve_state=data;
-      console.log(this.serve_state);
-  	})
+  constructor(public navCtrl: NavController, public homeProvider: HomeProvider, private toastCtrl: ToastController) {
 
-  	
-  	//Aquí quedamos, ahora se debería revisar el estado del servidor mediante el metodo server_state() que retornará true o false. 
   }
-  onClick(event){
-    if (event.value!=this.serve_state){
-      this.serve_state=event.value;
-      this.homeProvider.set_state(this.serve_state).subscribe(
-      data=> console.log(data));
+  ngOnInit() {
+    this.homeProvider.state().subscribe(data => this.serve_state = data)
+  }
+
+  onClick(event) {
+    if (event.value != this.serve_state) {
+      this.serve_state = event.value;
+      this.homeProvider.set_state(this.serve_state).subscribe(data => {
+        if (this.serve_state) {
+          this.showToastWithCloseButton('middle', 'SmartFeeder encedido')
+        } else {
+          this.showToastWithCloseButton('middle', 'SmartFeeder apagado')
+        }
+      });
     }
-    
+  }
+
+  showToastWithCloseButton(positionString: string, msg: string) {
+    const toast = this.toastCtrl.create({
+      message: msg,
+      duration: 1000,
+      position: positionString,
+      cssClass: "home.scss"
+    });
+    toast.onDidDismiss(this.dismissHandler);
+    toast.present();
   }
 
   goToSchedule(params) {

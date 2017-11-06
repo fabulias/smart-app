@@ -11,43 +11,22 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class HomeProvider {
-  url = 'https://dd7a5ff8.ngrok.io/'; 
+  url = 'https://a4c6ea47.ngrok.io/';
   constructor(public http: Http) {
-    
+
   }
   state(): Observable<boolean> {
-  		
-      	return this.http.get(this.url)
-      			.map((res: Response)=>{
-      				if (res.status==200) {
-      					return true 
-      				}
-      				else { 
-      					return false
-      				}
-      			})
-      			.catch((error : any ) => Observable.of(false));
+    return this.http.get(this.url)
+      .map((res: Response) => { return res.status == 200 ? true : false })
+      .catch((error: any) => Observable.of(false));
   }
-  set_state(state: boolean) : Observable<boolean> {
-  	const headers = new Headers();
-  	headers.append('Content-Type', 'application/json');
-  	const options = new RequestOptions({ 'headers': headers });
-  	let body = JSON.stringify({state: state})
-  	console.log(body);
-  	return this.http.post(this.url,body, options)
-  			.map((res: Response)=>{
-  				console.log("in map");
-  				if (res.status==200) {
-  					console.log("SERVER STATE CHANGE")
-  					return true
-  				}
-  				else {
-  					console.log("SOME ERROR ON SERVER")
-  					return false
-  				}
-
-  		})
-  		.catch((error: any) => Observable.of(false)); 
+  set_state(state: boolean): Observable<boolean> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    const options = new RequestOptions({ 'headers': headers });
+    let body = JSON.stringify({ state: state })
+    return this.http.post(this.url, body, options)
+      .map((res: Response) => { return res.status == 200 ? true : false })
+      .catch((error: any) => Observable.of(false));
   }
-
 }
