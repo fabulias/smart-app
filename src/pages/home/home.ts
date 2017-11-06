@@ -19,9 +19,6 @@ export class HomePage {
   		this.serve_state=data;
       console.log(this.serve_state);
   	})
-
-  	
-  	//Aquí quedamos, ahora se debería revisar el estado del servidor mediante el metodo server_state() que retornará true o false. 
   }
   onClick(event){
     if (event.value!=this.serve_state){

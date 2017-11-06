@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class HomeProvider {
-  url = 'https://dd7a5ff8.ngrok.io/'; 
+  url = 'https://a4c6ea47.ngrok.io/'; 
   constructor(public http: Http) {
     
   }
