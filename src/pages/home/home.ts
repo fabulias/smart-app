@@ -38,7 +38,6 @@ export class HomePage {
       position: positionString,
       cssClass: "home.scss"
     });
-    toast.onDidDismiss(this.dismissHandler);
     toast.present();
   }
 
