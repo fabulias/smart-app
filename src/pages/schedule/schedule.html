@@ -8,14 +8,12 @@
 <ion-content padding id="page2" style="background-color:#EFFBF5;">
   <div *ngIf="schedule.length > 0">
     <div *ngFor="let row of schedule">
-      {{row.value}}
-
-
+      first: {{row.hour}} second: {{row.ration}}
     </div>
   </div>
   <div *ngIf="index < 4">
     <ion-fab bottom center>
-    <button *ngIf="index < 4" ion-fab mini color="secondary" on-click="openModal()"><ion-icon name="add"></ion-icon></button>
-  </ion-fab>
+      <button *ngIf="index < 4" ion-fab mini color="secondary" on-click="openModal()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
   </div>
 </ion-content>
