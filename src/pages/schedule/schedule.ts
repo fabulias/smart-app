@@ -92,7 +92,7 @@ export class SchedulePage implements OnInit {
       else 
         this.schedule[3] = { "ration": val};
     })
-    debugger;
+
   }
 
   presentLoading() {

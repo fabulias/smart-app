@@ -7,10 +7,10 @@
 </ion-header>
 <ion-content padding id="page2" style="background-color:#EFFBF5;">
   <div *ngIf="schedule.length > 0">
-    Hola
     <div *ngFor="let row of schedule">
-      {{row}}
-      {{debugger}}
+      {{row.value}}
+
+
     </div>
   </div>
   <div *ngIf="index < 4">
