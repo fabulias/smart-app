@@ -17,23 +17,25 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'schedule-form.html',
 })
 export class ScheduleFormPage {
-  	public invoiceForm: FormGroup
+  public invoiceForm: FormGroup
 
-  	public hour="00:00";
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl:ViewController,
-  				  public fb: FormBuilder, public storage: Storage) {
-  	}
-    ngOnInit() {
-    }
-        
-    sendData(f: NgForm){
-    	let data = { 'hour': f.value['hour'],
-    		'quantity':f.value['quantity'] };
-    	this.viewCtrl.dismiss(data);
-    }
+  public hour = "00:00";
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
+    public fb: FormBuilder, public storage: Storage) {
+  }
+  ngOnInit() {
+  }
 
-  	closeModal() {
-  		this.viewCtrl.dismiss();
+  sendData(f: NgForm) {
+    let data = {
+      'hour': f.value['hour'],
+      'quantity': f.value['quantity']
+    };
+    this.viewCtrl.dismiss(data);
+  }
+
+  closeModal() {
+    this.viewCtrl.dismiss();
   }
 
 }

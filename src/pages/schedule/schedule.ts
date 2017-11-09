@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController, ModalController, ViewController, AlertController } from 'ionic-angular';
 import { SampleModalPage } from '../sample-modal/sample-modal'; //Example modal
 import { ScheduleFormPage } from '../schedule-form/schedule-form';
@@ -9,138 +9,40 @@ import { Schedule } from '../../models/schedule';
   selector: 'page-schedule',
   templateUrl: 'schedule.html'
 })
-export class SchedulePage implements OnInit, OnChanges {
+export class SchedulePage implements OnInit {
   index: number;
   userName: string;
-  public schedule: Array<Schedule> = [];
+  public schedule: Schedule[] = [];
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
-    public modalCtrl: ModalController, public storage: Storage) {
+    public modalCtrl: ModalController, public storage: Storage) { }
+  ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
     this.storage.get('index')
       .then((val) => {
-        if (val == null || val == undefined)
+        if (val == null || val == undefined) {
           this.storage.set('index', 0);
-        this.index = val;
+          this.index = 0;
+        } else {
+          this.index = val;
+        }
       });
-  }
-  ngOnChanges() {
-    let hour = "00:00";
-    let ration = 0;
-    this.storage.get('hour1')
-      .then((val) => {
-        if (val != null && val != undefined)
-          hour = val;
-      })
 
-    this.storage.get('ration1')
-      .then((val) => {
-        if (val != null && val != undefined)
-          ration = val;
-      })
-
-    this.schedule.push({ "hour": hour, "ration": ration })
-    this.storage.get('hour2')
-      .then((val) => {
-        if (val != null && val != undefined)
-          hour = val;
-      })
-
-    this.storage.get('ration2')
-      .then((val) => {
-        if (val != null && val != undefined)
-          ration = val;
-      })
-
-    this.schedule.push({ "hour": hour, "ration": ration })
-
-    this.storage.get('hour3')
-      .then((val) => {
-        if (val != null && val != undefined)
-          hour = val;
-      })
-
-    this.storage.get('ration3')
-      .then((val) => {
-        if (val != null && val != undefined)
-          ration = val;
-      })
-
-    this.schedule.push({ "hour": hour, "ration": ration })
-
-
-    this.storage.get('hour4')
-      .then((val) => {
-        if (val != null && val != undefined)
-          hour = val;
-      })
-
-    this.storage.get('ration4')
-      .then((val) => {
-        if (val != null && val != undefined)
-          ration = val;
-      })
-  }
-  ngOnInit() {
-    let hour = "";
-    let ration = 0;
-    debugger;
-    this.storage.get('hour1')
-      .then((val) => {
-        debugger;
-        if (val != null && val != undefined)
-          hour = val;
-      })
-      .catch(error => console.log(error))
-
-    this.storage.get('ration1')
-      .then((val) => {
-        if (val != null && val != undefined)
-          ration = val;
-      })
-
-    this.schedule.push({ "hour": hour, "ration": ration })
-    debugger;
-    this.storage.get('hour2')
-      .then((val) => {
-        if (val != null && val != undefined)
-          hour = val;
-      })
-
-    this.storage.get('ration2')
-      .then((val) => {
-        if (val != null && val != undefined)
-          ration = val;
-      })
-
-    this.schedule.push({ "hour": hour, "ration": ration })
-
-    this.storage.get('hour3')
-      .then((val) => {
-        if (val != null && val != undefined)
-          hour = val;
-      })
-
-    this.storage.get('ration3')
-      .then((val) => {
-        if (val != null && val != undefined)
-          ration = val;
-      })
-
-    this.schedule.push({ "hour": hour, "ration": ration })
-
-    this.storage.get('hour4')
-      .then((val) => {
-        if (val != null && val != undefined)
-          hour = val;
-      })
-
-    this.storage.get('ration4')
-      .then((val) => {
-        if (val != null && val != undefined)
-          ration = val;
-      })
-
-    this.schedule.push({ "hour": hour, "ration": ration })
+    this.storage.get('schedule0').then((data) => {
+      if (data != null) this.schedule.push(data);
+    });
+    this.storage.get('schedule1').then((data) => {
+      if (data != null) this.schedule.push(data);
+    });
+    this.storage.get('schedule2').then((data) => {
+      if (data != null) this.schedule.push(data);
+    });
+    this.storage.get('schedule3').then((data) => {
+      if (data != null) this.schedule.push(data);
+    });
   }
 
   presentLoading() {
@@ -151,6 +53,16 @@ export class SchedulePage implements OnInit, OnChanges {
     loader.present();
   }
 
+  DeleteSchedule() {
+    this.storage.set('schedule0', null);
+    this.storage.set('schedule1', null);
+    this.storage.set('schedule2', null);
+    this.storage.set('schedule3', null);
+    this.storage.get('index').then(val => this.storage.set('index', 0));
+    this.index = 0;
+    this.navCtrl.pop();
+    this.navCtrl.push(SchedulePage);
+  }
 
   openModal() {
     let myModal = this.modalCtrl.create(ScheduleFormPage);
@@ -158,15 +70,19 @@ export class SchedulePage implements OnInit, OnChanges {
       this.storage.get('index')
         .then((val) => {
           if (val <= 3 && val != null) {
-            this.storage.set('hour' + val, data['hour']);
-            if (data['quantity'] == undefined || data['quantity'] == NaN)
-              this.storage.set('quantity' + val, 0);
-            else
-              this.storage.set('quantity' + val, data['quantity'] / 2);
+            if (data['quantity'] == undefined || data['quantity'] == NaN) {
+              data['quantity'] = 0;
+              this.storage.set('schedule' + val, data);
+            }
+            else {
+              data['quantity'] = data['quantity'] / 2;
+              this.storage.set('schedule' + val, data);
+            }
             this.storage.set('index', ++val);
             this.index = val;
           }
           this.presentLoading();
+          this.navCtrl.pop();
           this.navCtrl.push(SchedulePage);
         }).catch(error => console.log(error))
     });

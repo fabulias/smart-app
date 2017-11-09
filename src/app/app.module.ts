@@ -20,6 +20,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ScheduleProvider } from '../providers/schedule/schedule';
 import { HomeProvider } from '../providers/home/home';
+import { SchedulePipe } from '../pipes/schedule/schedule';
 
 @NgModule({
   declarations: [
@@ -28,9 +29,10 @@ import { HomeProvider } from '../providers/home/home';
     ContactPage,
     HomePage,
     SchedulePage,
+    SchedulePipe,
     TabsPage,
     SampleModalPage,
-    ScheduleFormPage,
+    ScheduleFormPage
   ],
   imports: [
     BrowserModule,
@@ -53,9 +55,9 @@ import { HomeProvider } from '../providers/home/home';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ScheduleProvider,
     HomeProvider,
   ]
 })
-export class AppModule {}
+export class AppModule { }
