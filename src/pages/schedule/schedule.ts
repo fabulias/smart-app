@@ -20,7 +20,14 @@ export class SchedulePage implements OnInit {
     this.loadData();
   }
 
+  doRefresh(refresher) {
+    this.loadData();
+    setTimeout(() => {
+      refresher.complete();
+    }, 2000);
+  }
   loadData() {
+    this.schedule = [];
     this.storage.get('index')
       .then((val) => {
         if (val == null || val == undefined) {
@@ -32,16 +39,16 @@ export class SchedulePage implements OnInit {
       });
 
     this.storage.get('schedule0').then((data) => {
-      if (data != null) this.schedule.push(data);
+      if (data != null && data != undefined) this.schedule.push(data);
     });
     this.storage.get('schedule1').then((data) => {
-      if (data != null) this.schedule.push(data);
+      if (data != null && data != undefined) this.schedule.push(data);
     });
     this.storage.get('schedule2').then((data) => {
-      if (data != null) this.schedule.push(data);
+      if (data != null && data != undefined) this.schedule.push(data);
     });
     this.storage.get('schedule3').then((data) => {
-      if (data != null) this.schedule.push(data);
+      if (data != null && data != undefined) this.schedule.push(data);
     });
   }
 
@@ -60,8 +67,7 @@ export class SchedulePage implements OnInit {
     this.storage.set('schedule3', null);
     this.storage.get('index').then(val => this.storage.set('index', 0));
     this.index = 0;
-    this.navCtrl.pop();
-    this.navCtrl.push(SchedulePage);
+    this.schedule = [];
   }
 
   openModal() {
@@ -70,8 +76,9 @@ export class SchedulePage implements OnInit {
       this.storage.get('index')
         .then((val) => {
           if (val <= 3 && val != null) {
+            debugger;
             if (data['quantity'] == undefined || data['quantity'] == NaN) {
-              data['quantity'] = 0;
+              data['quantity'] = 0.5;
               this.storage.set('schedule' + val, data);
             }
             else {
@@ -80,10 +87,9 @@ export class SchedulePage implements OnInit {
             }
             this.storage.set('index', ++val);
             this.index = val;
+            this.schedule.push({ hour: data['hour'], ration: data['quantity'] });
           }
           this.presentLoading();
-          this.navCtrl.pop();
-          this.navCtrl.push(SchedulePage);
         }).catch(error => console.log(error))
     });
     myModal.present();
