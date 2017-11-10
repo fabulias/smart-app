@@ -29,7 +29,7 @@ export class ScheduleFormPage {
   sendData(f: NgForm) {
     let data = {
       'hour': f.value['hour'],
-      'quantity': f.value['quantity']
+      'ration': f.value['quantity']
     };
     this.viewCtrl.dismiss(data);
   }
