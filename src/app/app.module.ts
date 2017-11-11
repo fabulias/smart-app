@@ -5,7 +5,6 @@ import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { SampleModalPage } from '../pages/sample-modal/sample-modal';
 import { ScheduleFormPage } from '../pages/schedule-form/schedule-form';
 
 import { AboutPage } from '../pages/about/about';
@@ -31,7 +30,6 @@ import { SchedulePipe } from '../pipes/schedule/schedule';
     SchedulePage,
     SchedulePipe,
     TabsPage,
-    SampleModalPage,
     ScheduleFormPage
   ],
   imports: [
@@ -49,7 +47,6 @@ import { SchedulePipe } from '../pipes/schedule/schedule';
     HomePage,
     SchedulePage,
     TabsPage,
-    SampleModalPage,
     ScheduleFormPage,
   ],
   providers: [

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, LoadingController, ModalController, ViewController, AlertController } from 'ionic-angular';
-import { SampleModalPage } from '../sample-modal/sample-modal'; //Example modal
+import { NavController, LoadingController, ModalController } from 'ionic-angular';
+import { ViewController, AlertController } from 'ionic-angular';
 import { ScheduleFormPage } from '../schedule-form/schedule-form';
 import { Storage } from '@ionic/storage';
 import { Schedule } from '../../models/schedule';
@@ -22,14 +22,13 @@ export class SchedulePage implements OnInit {
 
   doRefresh(refresher) {
     this.loadData();
-    this.OrderByArray(this.schedule, 'hour')
-      .map(data => {
-        console.log(data);
-        this.schedule = data;
-      })
     setTimeout(() => {
       refresher.complete();
     }, 2000);
+  }
+
+  sendSchedule() {
+    debugger;
   }
 
   loadData() {
@@ -44,25 +43,45 @@ export class SchedulePage implements OnInit {
       });
     this.storage.get('schedule0').then((data) => {
       if (data != null && data != undefined) this.schedule.push(data);
-      console.log(this.OrderByArray(this.schedule, 'hour').map(d => d));
+      var result = this.OrderByArray(this.schedule, 'hour').map(d => { return d; });
+      this.schedule = result;
+      let i: number = 1;
+      for (let entry of this.schedule) {
+        entry.id = i;
+        i++;
+      }
     });
     this.storage.get('schedule1').then((data) => {
       if (data != null && data != undefined) this.schedule.push(data);
-      debugger;
-      var a = [];
-      this.OrderByArray(this.schedule, 'hour').map(d => a = d);
-      debugger;
+      var result = this.OrderByArray(this.schedule, 'hour').map(d => { return d; });
+      this.schedule = result;
+      let i: number = 1;
+      for (let entry of this.schedule) {
+        entry.id = i;
+        i++;
+      }
     });
     this.storage.get('schedule2').then((data) => {
       if (data != null && data != undefined) this.schedule.push(data);
-      console.log(this.OrderByArray(this.schedule, 'hour').map(d => d));
-      debugger;
+      var result = this.OrderByArray(this.schedule, 'hour').map(d => { return d; });
+      this.schedule = result;
+      let i: number = 1;
+      for (let entry of this.schedule) {
+        entry.id = i;
+        i++;
+      }
     });
     this.storage.get('schedule3').then((data) => {
       if (data != null && data != undefined) this.schedule.push(data);
-      console.log(this.OrderByArray(this.schedule, 'hour').map(d => d));
-      debugger;
+      var result = this.OrderByArray(this.schedule, 'hour').map(d => { return d; });
+      this.schedule = result;
+      let i: number = 1;
+      for (let entry of this.schedule) {
+        entry.id = i;
+        i++;
+      }
     });
+
   }
 
   presentLoading() {
@@ -85,11 +104,13 @@ export class SchedulePage implements OnInit {
 
   OrderByArray(values: any[], orderType: any) {
     return values.sort((a, b) => {
-      if (new Date(a[orderType]) < new Date(b[orderType])) {
+      var l = new Date('1970/01/01 ' + a[orderType])
+      var r = new Date('1970/01/01 ' + b[orderType])
+      if (l < r) {
         return -1;
       }
 
-      if (new Date(a[orderType]) > new Date(b[orderType])) {
+      if (l > r) {
         return 1;
       }
       return 0
@@ -102,16 +123,16 @@ export class SchedulePage implements OnInit {
       this.storage.get('index')
         .then((val) => {
           if (val <= 3 && val != null) {
-            if (data['quantity'] == undefined || data['quantity'] == NaN) {
-              data['quantity'] = 0.5;
+            if (data['ration'] == undefined || data['ration'] == NaN) {
+              data['ration'] = 0.5;
               this.storage.set('schedule' + val, data);
             } else {
-              data['quantity'] = data['quantity'] / 2;
+              data['ration'] = data['ration'] / 2;
               this.storage.set('schedule' + val, data);
             }
             this.storage.set('index', ++val);
             this.index = val;
-            this.schedule.push({ hour: data['hour'], quantity: data['quantity'] });
+            this.schedule.push({ id: val, hour: data['hour'], ration: data['ration'] });
           }
           this.presentLoading();
         }).catch(error => console.log(error))

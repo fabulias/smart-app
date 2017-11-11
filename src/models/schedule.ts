@@ -1,10 +1,10 @@
 export class Schedule {
   public hour: string;
-  public quantity: number;
+  public ration: number;
+  public id: number;
 
   constructor(h: string, q: number) {
     this.hour = h;
-    this.quantity = q;
+    this.ration = q;
   }
-
 }

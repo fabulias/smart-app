@@ -10,10 +10,10 @@ import { Storage } from '@ionic/storage';
 */
 @Injectable()
 export class ScheduleProvider {
-
+  url = 'https://3265ca9c.ngrok.io';
   constructor(public http: Http, public storage: Storage) {
-    
+
   }
-  
+
 
 }
