@@ -13,25 +13,26 @@
 
   <div *ngIf="schedule.length > 0">
     <ion-card>
-      <ion-card-header range-left *ngIf="schedule.length <= 3" style="text-align:center;color:#31B404">
+      <ion-card-header *ngIf="schedule.length <= 3" style="text-align:center;color:#31B404">
         Horarios asignados : {{schedule.length}}
       </ion-card-header>
-      <ion-card-header range-left *ngIf="schedule.length > 3" style="text-align:center;color:red">
+      <ion-card-header *ngIf="schedule.length > 3" style="text-align:center;color:red">
         Horarios asignados : {{schedule.length}}
       </ion-card-header>
     </ion-card>
 
 
-    <ion-scroll style="height:300px" scrollY="true">
-      <div *ngFor="let row of schedule">
+    <ion-scroll style="height:300px;" scrollY="true">
+      <ion-list *ngFor="let row of schedule">
+        <ion-item-divider color="them" style="font-size:20px;text-align:center"> Comida Nº {{row.id}}</ion-item-divider>
         <ion-item id="horario-range1">
           <ion-label>
             <img src="assets/imgs/cup.svg" alt="" height="40px" width="40px">
           </ion-label>
           <ion-label>
-            <p style="font-size:30px;color:#488aff;text-align:right" *ngIf="row.quantity > 1">{{row.quantity}} tazas</p>
-            <p style="font-size:30px;color:#488aff;text-align:right" *ngIf="row.quantity == 1">{{row.quantity}} taza</p>
-            <p style="text-align:right;color:#488aff;font-size:30px" *ngIf="row.quantity == 0.5">1/2 taza</p>
+            <p style="font-size:30px;color:#068590;text-align:right" *ngIf="row.ration > 1">{{row.ration}} tazas</p>
+            <p style="font-size:30px;color:#068590;text-align:right" *ngIf="row.ration == 1">{{row.ration}} taza</p>
+            <p style="text-align:right;color:#068590;font-size:30px" *ngIf="row.ration == 0.5">1/2 taza</p>
           </ion-label>
         </ion-item>
         <ion-item>
@@ -39,22 +40,22 @@
             <ion-icon name="md-time" style="font-size:50px "></ion-icon>
           </ion-label>
           <ion-label range-right>
-            <p style="font-size:30px;color:#488aff;text-align:right">{{row.hour}}</p>
+            <p style="font-size:30px;color:#068590;text-align:right">{{row.hour}}</p>
           </ion-label>
         </ion-item>
-      </div>
+      </ion-list>
     </ion-scroll>
   </div>
   <ion-grid bottom center>
     <ion-row *ngIf=" schedule.length> 0">
       <ion-col col-6>
-        <button ion-button icon-start block color="dark" on-click="sendSchedule(f)">
-          Enviar horario
+        <button ion-button icon-start block color="secondary" on-click="sendSchedule()">
+          Guardar
       </button>
       </ion-col>
       <ion-col col-6>
-        <button ion-button icon-end block color="light" on-click="DeleteSchedule()">
-          Eliminar horario
+        <button ion-button icon-end block color="danger" on-click="DeleteSchedule()">
+          Eliminar
         </button>
       </ion-col>
     </ion-row>
@@ -67,5 +68,4 @@
       <button ion-fab mini color="secondary" on-click="openModal()"><ion-icon ios="ios-add" md="md-add"></ion-icon></button>
     </ion-fab>
   </div>
-
 </ion-content>
