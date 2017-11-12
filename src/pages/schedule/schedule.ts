@@ -4,6 +4,7 @@ import { ViewController, AlertController } from 'ionic-angular';
 import { ScheduleFormPage } from '../schedule-form/schedule-form';
 import { Storage } from '@ionic/storage';
 import { Schedule } from '../../models/schedule';
+import { ScheduleProvider } from '../../providers/schedule/schedule';
 
 @Component({
   selector: 'page-schedule',
@@ -15,12 +16,13 @@ export class SchedulePage implements OnInit {
   public schedule: Schedule[] = [];
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
-    public modalCtrl: ModalController, public storage: Storage) { }
+    public modalCtrl: ModalController, public storage: Storage, public scheduleProvider: ScheduleProvider) { }
   ngOnInit() {
     this.loadData();
   }
 
   doRefresh(refresher) {
+    this.schedule = [];
     this.loadData();
     setTimeout(() => {
       refresher.complete();
@@ -28,7 +30,9 @@ export class SchedulePage implements OnInit {
   }
 
   sendSchedule() {
-    debugger;
+    this.scheduleProvider
+      .sendSchedule(this.schedule)
+      .subscribe(data => console.log(data));
   }
 
   loadData() {
