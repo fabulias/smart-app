@@ -17,9 +17,8 @@ export class ScheduleProvider {
 
   }
   sendSchedule(data: Schedule[]): Observable<boolean> {
-    let schedule_: scheduleService = new scheduleService();
-    schedule_.ration1 = data[0].ration;
-    schedule_.date1 = data[0].hour;
+    let schedule_: scheduleService = new scheduleService(data[0].ration,
+      0, 0, 0, data[0].hour, "00:00", "00:00", "00:00");
     let size = data.length;
     --size;
     if (size > 0) {
@@ -37,13 +36,16 @@ export class ScheduleProvider {
       schedule_.date4 = data[3].hour;
       --size;
     }
-    debugger;
-
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     const options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify({ data: data })
+    let body = JSON.stringify(schedule_);
     return this.http.post(this.url, body, options)
+      .map((res: Response) => { return res.status == 200 ? true : false })
+      .catch((error: any) => Observable.of(false));
+  }
+  deteleSchedule(): Observable<boolean> {
+    return this.http.delete(this.url)
       .map((res: Response) => { return res.status == 200 ? true : false })
       .catch((error: any) => Observable.of(false));
   }

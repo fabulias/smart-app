@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, LoadingController, ModalController } from 'ionic-angular';
+import { NavController, LoadingController, ModalController, ToastController } from 'ionic-angular';
 import { ViewController, AlertController } from 'ionic-angular';
 import { ScheduleFormPage } from '../schedule-form/schedule-form';
 import { Storage } from '@ionic/storage';
@@ -16,7 +16,8 @@ export class SchedulePage implements OnInit {
   public schedule: Schedule[] = [];
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
-    public modalCtrl: ModalController, public storage: Storage, public scheduleProvider: ScheduleProvider) { }
+    public modalCtrl: ModalController, public storage: Storage, public scheduleProvider: ScheduleProvider,
+    private toastCtrl: ToastController) { }
   ngOnInit() {
     this.loadData();
   }
@@ -30,11 +31,35 @@ export class SchedulePage implements OnInit {
   }
 
   sendSchedule() {
+    this.sendLoading();
     this.scheduleProvider
       .sendSchedule(this.schedule)
-      .subscribe(data => console.log(data));
+      .subscribe(data => {
+        if (data) {
+          this.showToastWithCloseButton('middle', 'Horario guardado')
+        } else {
+          this.showToastWithCloseButton('middle', 'Error, horario no pudo ser guardado')
+        }
+      });
   }
-
+  deleteSchedule() {
+    this.scheduleProvider
+      .deteleSchedule()
+      .subscribe(data => {
+        if (data) {
+          this.storage.set('schedule0', null);
+          this.storage.set('schedule1', null);
+          this.storage.set('schedule2', null);
+          this.storage.set('schedule3', null);
+          this.storage.get('index').then(val => this.storage.set('index', 0));
+          this.index = 0;
+          this.schedule = [];
+          this.deleteLoading();
+          this.showToastWithCloseButton('middle', 'Horario eliminado');
+        } else
+          this.showToastWithCloseButton('middle', 'Error, horario no pudo ser eliminado');
+      });
+  }
   loadData() {
     this.storage.get('index')
       .then((val) => {
@@ -88,22 +113,27 @@ export class SchedulePage implements OnInit {
 
   }
 
-  presentLoading() {
+  sendLoading() {
     let loader = this.loadingCtrl.create({
-      content: "Creating time and ration...",
-      duration: 500
+      content: "Asignando horarios",
+      duration: 1500
+    });
+    loader.present();
+  }
+  deleteLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Eliminando horario",
+      duration: 1500
     });
     loader.present();
   }
 
-  DeleteSchedule() {
-    this.storage.set('schedule0', null);
-    this.storage.set('schedule1', null);
-    this.storage.set('schedule2', null);
-    this.storage.set('schedule3', null);
-    this.storage.get('index').then(val => this.storage.set('index', 0));
-    this.index = 0;
-    this.schedule = [];
+  presentLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Creando horario y ración",
+      duration: 500
+    });
+    loader.present();
   }
 
   OrderByArray(values: any[], orderType: any) {
@@ -142,5 +172,15 @@ export class SchedulePage implements OnInit {
         }).catch(error => console.log(error))
     });
     myModal.present();
+  }
+
+  showToastWithCloseButton(positionString: string, msg: string) {
+    const toast = this.toastCtrl.create({
+      message: msg,
+      duration: 1000,
+      position: positionString,
+      cssClass: "home.scss"
+    });
+    toast.present();
   }
 }
