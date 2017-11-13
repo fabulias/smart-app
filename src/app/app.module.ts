@@ -14,6 +14,7 @@ import { SchedulePage } from '../pages/schedule/schedule';
 import { TabsPage } from '../pages/tabs/tabs';
 import { IonicStorageModule } from '@ionic/storage';
 import { Push } from '@ionic-native/push';
+import { Network } from '@ionic-native/network';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -56,7 +57,8 @@ import { SchedulePipe } from '../pipes/schedule/schedule';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ScheduleProvider,
     HomeProvider,
-    Push,
+    Network,
+    Push
   ]
 })
 export class AppModule { }
