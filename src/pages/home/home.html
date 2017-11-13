@@ -5,20 +5,18 @@
   <h1 id="home-heading3" style="color:#068590;font-weight:600;text-align:center;font-size:50px;">
     SmartFeeder
   </h1>
-  <form id="home-form1">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-10 offset-1>
-          <ion-item style="border-radius:48px 48px 48px 48px;color:#068590;text-align:center;" id="home-toggle1">
-            <ion-label>
-              <h2>Encendido/Apagado</h2>
-            </ion-label>
-            <ion-toggle [checked]="serve_state" disabled="false" (ionChange)="onClick($event)"></ion-toggle>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10 offset-1>
+        <ion-item style="border-radius:48px 48px 48px 48px;color:#068590;text-align:center;" id="home-toggle1">
+          <ion-label>
+            <h2>Estado</h2>
+          </ion-label>
+          <ion-toggle [(ngModel)]="toggleOnOff" disabled="false" color="secondary" (ionChange)="onClick($event)">{{toggleOnOff}}</ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <div class="spacer" style="width:300px;height:230.09375px;" id="home-spacer1"></div>
   <button id="home-button1" ion-button block style="background-color:#068590;font-size:30px;border-radius:48px 48px 48px 48px;height:35px;padding-top:10px" on-click="goToSchedule()">
       <ion-label><h3>INGRESAR COMIDAS</h3></ion-label>

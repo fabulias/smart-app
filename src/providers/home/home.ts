@@ -20,13 +20,20 @@ export class HomeProvider {
       .map((res: Response) => { return res.status == 200 ? true : false })
       .catch((error: any) => Observable.of(false));
   }
-  set_state(state: boolean): Observable<boolean> {
+  set_state(state: boolean): Observable<string> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     const options = new RequestOptions({ 'headers': headers });
     let body = JSON.stringify({ state: state })
     return this.http.post(this.url, body, options)
-      .map((res: Response) => { return res.status == 200 ? true : false })
-      .catch((error: any) => Observable.of(false));
+      .map((res: Response) => {
+        if (res.status == 200)
+          return "on";
+        if (res.status == 202)
+          return "off";
+        else
+          return "error";
+      })
+      .catch((error: any) => Observable.of("error"));
   }
 }

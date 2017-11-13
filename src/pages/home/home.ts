@@ -10,27 +10,35 @@ import { HomeProvider } from '../../providers/home/home';
 })
 export class HomePage {
   serve_state: boolean;  //current state
-
+  private toggleOnOff: boolean;
   constructor(public navCtrl: NavController, public homeProvider: HomeProvider, private toastCtrl: ToastController) {
 
   }
   ngOnInit() {
     this.homeProvider.state().subscribe(data => {
-      this.serve_state = data;
+      if (data) {
+        this.showToastWithCloseButton('middle', 'SmartFeeder encedido');
+        this.toggleOnOff = true;
+      }
+      else {
+        this.showToastWithCloseButton('middle', 'SmartFeeder apagado')
+        this.toggleOnOff = false;
+      }
     });
   }
 
   onClick(event) {
-    if (event.value != this.serve_state) {
-      this.serve_state = event.value;
-      this.homeProvider.set_state(this.serve_state).subscribe(data => {
-        if (this.serve_state) {
-          this.showToastWithCloseButton('middle', 'SmartFeeder encedido')
-        } else {
-          this.showToastWithCloseButton('middle', 'SmartFeeder apagado')
-        }
-      });
-    }
+    this.homeProvider.set_state(this.serve_state).subscribe(data => {
+      if (data == "on") {
+        this.toggleOnOff = true;
+        this.showToastWithCloseButton('middle', 'SmartFeeder encedido');
+      } if (data == "off") {
+        this.toggleOnOff = false;
+        this.showToastWithCloseButton('middle', 'SmartFeeder apagado');
+      } else {
+        this.showToastWithCloseButton('middle', 'Error en servidor');
+      }
+    });
   }
 
   showToastWithCloseButton(positionString: string, msg: string) {
