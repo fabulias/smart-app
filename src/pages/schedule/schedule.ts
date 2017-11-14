@@ -165,23 +165,24 @@ export class SchedulePage implements OnInit {
   openModal() {
     let myModal = this.modalCtrl.create(ScheduleFormPage);
     myModal.onDidDismiss(data => {
-      this.storage.get('index')
-        .then((val) => {
-          debugger;
-          if (val <= 3 && val != null) {
-            if (data['ration'] == undefined || data['ration'] == NaN) {
-              data['ration'] = 0.5;
-              this.storage.set('schedule' + val, data);
-            } else {
-              data['ration'] = data['ration'] / 2;
-              this.storage.set('schedule' + val, data);
+      if (data != undefined) {
+        this.storage.get('index')
+          .then((val) => {
+            if (val <= 3 && val != null) {
+              if (data['ration'] == undefined || data['ration'] == NaN) {
+                data['ration'] = 0.5;
+                this.storage.set('schedule' + val, data);
+              } else {
+                data['ration'] = data['ration'] / 2;
+                this.storage.set('schedule' + val, data);
+              }
+              this.storage.set('index', ++val);
+              this.index = val;
+              this.schedule.push({ id: val, hour: data['hour'], ration: data['ration'] });
             }
-            this.storage.set('index', ++val);
-            this.index = val;
-            this.schedule.push({ id: val, hour: data['hour'], ration: data['ration'] });
-          }
-          this.presentLoading();
-        }).catch(error => console.log(error))
+            this.presentLoading();
+          }).catch(error => console.log(error))
+      }
     });
     myModal.present();
   }

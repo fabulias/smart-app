@@ -10,7 +10,8 @@
       <ion-col col-8 offset-2>
         <ion-item style="border-radius:48px 48px 48px 48px;color:#068590;text-align:center;" id="home-toggle1">
           <ion-label>
-            <h1>Estado</h1>
+            <ion-icon style="font-size:30px" ios="ios-power" md="md-power">
+              <h1>Encendido</h1></ion-icon>
           </ion-label>
           <ion-toggle [(ngModel)]="toggleOnOff" disabled="false" color="secondary" (ionChange)="onClick($event)">{{toggleOnOff}}</ion-toggle>
         </ion-item>
