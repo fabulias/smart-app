@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController, ModalController } from 'ionic-angular';
-import { Platform, AlertController, ToastController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 import { ScheduleFormPage } from '../schedule-form/schedule-form';
 import { Storage } from '@ionic/storage';
 import { Schedule } from '../../models/schedule';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
 import { Network } from "@ionic-native/network";
 
-declare var navigator: any;
-declare var Connection: any;
 @Component({
   selector: 'page-schedule',
   templateUrl: 'schedule.html'
@@ -20,11 +18,8 @@ export class SchedulePage implements OnInit {
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,
     public modalCtrl: ModalController, public storage: Storage, public scheduleProvider: ScheduleProvider,
-    private toastCtrl: ToastController, private platform: Platform, private alertCtrl: AlertController,
-    private network: Network) { }
+    private toastCtrl: ToastController, private network: Network) { }
   ngOnInit() {
-    this.checkNetwork();
-    this.fun();
     this.loadData();
   }
 
@@ -33,66 +28,49 @@ export class SchedulePage implements OnInit {
     this.loadData();
     setTimeout(() => {
       refresher.complete();
-    }, 1500);
-  }
-  fun() {
-    // watch network for a connection
-    let connectSubscription = this.network.onConnect().subscribe(() => {
-      console.log('network connected!');
-      // We just got a connection but we need to wait briefly
-      // before we determine the connection type. Might need to wait.
-      // prior to doing any api requests as well.
-      setTimeout(() => {
-        if (this.network.type === 'wifi') {
-          console.log('we got a wifi connection, woohoo!');
-        }
-      }, 3000);
-    });
-
-    // stop connect watch
-    connectSubscription.unsubscribe();
+    }, 1000);
   }
 
-  checkNetwork() {
-    this.platform.ready().then(() => {
-      let alert = this.alertCtrl.create({
-        title: "Connection Status",
-        subTitle: <string>this.network.type,
-        buttons: ["OK"]
-      });
-      alert.present(alert);
-    });
-  }
   sendSchedule() {
-    this.sendLoading();
-    this.scheduleProvider
-      .sendSchedule(this.schedule)
-      .subscribe(data => {
-        if (data) {
-          this.showToastWithCloseButton('middle', 'Horario guardado')
-        } else {
-          this.showToastWithCloseButton('middle', 'Ups! SmartFeedr desconectado');
-        }
-      });
+    if (<string>this.network.type == "none") {
+      this.showToastWithCloseButton('middle', 'Revisa tu conexión a Internet')
+    } else {
+      this.sendLoading();
+      this.scheduleProvider
+        .sendSchedule(this.schedule)
+        .subscribe(data => {
+          if (data) {
+            this.showToastWithCloseButton('middle', 'Horario guardado')
+          } else {
+            this.showToastWithCloseButton('middle', 'Ups! SmartFeedr desconectado');
+          }
+        });
+    }
   }
+
   deleteSchedule() {
-    this.deleteLoading();
-    this.scheduleProvider
-      .deteleSchedule()
-      .subscribe(data => {
-        if (data) {
-          this.storage.set('schedule0', null);
-          this.storage.set('schedule1', null);
-          this.storage.set('schedule2', null);
-          this.storage.set('schedule3', null);
-          this.storage.get('index').then(val => this.storage.set('index', 0));
-          this.index = 0;
-          this.schedule = [];
-          this.showToastWithCloseButton('middle', 'Horario eliminado');
-        } else
-          this.showToastWithCloseButton('middle', 'Ups! SmartFeedr desconectado');
-      });
+    if (<string>this.network.type == "none") {
+      this.showToastWithCloseButton('middle', 'Revisa tu conexión a Internet')
+    } else {
+      this.deleteLoading();
+      this.scheduleProvider
+        .deteleSchedule()
+        .subscribe(data => {
+          if (data) {
+            this.storage.set('schedule0', null);
+            this.storage.set('schedule1', null);
+            this.storage.set('schedule2', null);
+            this.storage.set('schedule3', null);
+            this.storage.get('index').then(val => this.storage.set('index', 0));
+            this.index = 0;
+            this.schedule = [];
+            this.showToastWithCloseButton('middle', 'Horario eliminado');
+          } else
+            this.showToastWithCloseButton('middle', 'Ups! SmartFeedr desconectado');
+        });
+    }
   }
+
   loadData() {
     this.storage.get('index')
       .then((val) => {
@@ -149,14 +127,14 @@ export class SchedulePage implements OnInit {
   sendLoading() {
     let loader = this.loadingCtrl.create({
       content: "Asignando horarios",
-      duration: 1500
+      duration: 1000
     });
     loader.present();
   }
   deleteLoading() {
     let loader = this.loadingCtrl.create({
       content: "Eliminando horario",
-      duration: 1500
+      duration: 1000
     });
     loader.present();
   }
@@ -189,6 +167,7 @@ export class SchedulePage implements OnInit {
     myModal.onDidDismiss(data => {
       this.storage.get('index')
         .then((val) => {
+          debugger;
           if (val <= 3 && val != null) {
             if (data['ration'] == undefined || data['ration'] == NaN) {
               data['ration'] = 0.5;

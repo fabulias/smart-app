@@ -3,6 +3,7 @@ import { NavController, ToastController } from 'ionic-angular';
 import { SchedulePage } from '../schedule/schedule';
 import { HomeProvider } from '../../providers/home/home';
 
+import { Network } from '@ionic-native/network';
 
 @Component({
   selector: 'page-home',
@@ -11,34 +12,43 @@ import { HomeProvider } from '../../providers/home/home';
 export class HomePage {
   serve_state: boolean;  //current state
   private toggleOnOff: boolean;
-  constructor(public navCtrl: NavController, public homeProvider: HomeProvider, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public homeProvider: HomeProvider,
+    private toastCtrl: ToastController, private network: Network) {
 
   }
   ngOnInit() {
-    this.homeProvider.state().subscribe(data => {
-      if (data) {
-        this.showToastWithCloseButton('middle', 'SmartFeeder encedido');
-        this.toggleOnOff = true;
-      }
-      else {
-        this.showToastWithCloseButton('middle', 'SmartFeeder apagado')
-        this.toggleOnOff = false;
-      }
-    });
+    if (<string>this.network.type == "none") {
+      this.showToastWithCloseButton('middle', 'Revisa tu conexión a Internet')
+    } else {
+      this.homeProvider.state().subscribe(data => {
+        if (data) {
+          this.showToastWithCloseButton('middle', 'SmartFeedr encedido');
+          this.toggleOnOff = true;
+        }
+        else {
+          this.showToastWithCloseButton('middle', 'SmartFeedr apagado')
+          this.toggleOnOff = false;
+        }
+      });
+    }
   }
 
   onClick(event) {
-    this.homeProvider.set_state(this.serve_state).subscribe(data => {
-      if (data == "on") {
-        this.toggleOnOff = true;
-        this.showToastWithCloseButton('middle', 'SmartFeeder encedido');
-      } if (data == "off") {
-        this.toggleOnOff = false;
-        this.showToastWithCloseButton('middle', 'SmartFeeder apagado');
-      } else {
-        this.showToastWithCloseButton('middle', 'Error en servidor');
-      }
-    });
+    if (<string>this.network.type == "none") {
+      this.showToastWithCloseButton('middle', 'Revisa tu conexión a Internet')
+    } else {
+      this.homeProvider.set_state(event.value).subscribe(data => {
+        if (data == "on") {
+          this.toggleOnOff = true;
+          this.showToastWithCloseButton('middle', 'SmartFeedr encendido');
+        } else if (data == "off") {
+          this.toggleOnOff = false;
+          this.showToastWithCloseButton('middle', 'SmartFeedr apagado');
+        } else {
+          this.showToastWithCloseButton('middle', 'Error en servidor');
+        }
+      });
+    }
   }
 
   showToastWithCloseButton(positionString: string, msg: string) {

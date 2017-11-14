@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Horario y Cantidad</ion-title>
+    <ion-title>Ingresa Cantidad y Horario</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,18 +16,19 @@
 <ion-content padding style="background-color:#EFFBF5;">
   <form #f="ngForm">
     <ion-item id="horario-range1">
-      <ion-range style="padding-left:0px" [(ngModel)]="ration" min="1" max="6" step="1" color="balanced" value="1" name="ration">
+      <ion-range style="padding-left:0px" [(ngModel)]="ration" min="1" max="4" step="1" color="balanced" value="1" name="ration">
         <ion-icon range-left>
           <img src="assets/imgs/cup.svg" alt="" height="40px" width="40px">
         </ion-icon>
         <ion-label range-right>
           <div *ngIf="ration; else other_ration">
-            <p *ngIf="ration >= 3" style="font-size:30px;color:#AED581">{{ration/2}} tazas</p>
+            <p *ngIf="ration == 4" style="font-size:30px;color:#AED581">{{ration/2}} tazas</p>
+            <p *ngIf="ration == 3" style="font-size:30px;color:#AED581">1 ½ tazas</p>
             <p *ngIf="ration == 2" style="font-size:30px;color:#AED581">1 taza</p>
-            <p *ngIf="ration == 1" style="font-size:30px;color:#AED581">1/2 taza</p>
+            <p *ngIf="ration == 1" style="font-size:30px;color:#AED581">½ taza</p>
           </div>
           <ng-template #other_ration>
-            <p style="font-size:30px">1/2 taza</p>
+            <p style="font-size:30px">½ taza</p>
           </ng-template>
         </ion-label>
       </ion-range>
