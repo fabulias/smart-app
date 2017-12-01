@@ -11,7 +11,7 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="schedule.length > 0">
+  <div *ngIf="schedule.length >= 0">
     <ion-card>
       <ion-card-header *ngIf="schedule.length <= 3" style="text-align:center;color:#31B404">
         Horarios asignados : {{schedule.length}}
@@ -21,7 +21,7 @@
       </ion-card-header>
     </ion-card>
 
-    <ion-scroll *ngIf="index <= 3" style="height:300px;" scrollY="true">
+    <ion-scroll *ngIf="index <= 3" style="height:360px;" scrollY="true">
       <ion-list *ngFor="let row of schedule">
         <ion-item-divider color="them" style="font-size:20px;text-align:center"> Comida Nº {{row.id}}</ion-item-divider>
         <ion-item id="horario-range1">
@@ -46,7 +46,7 @@
       </ion-list>
     </ion-scroll>
 
-    <ion-scroll *ngIf="index > 3" style="height:350px;" scrollY="true">
+    <ion-scroll *ngIf="index > 3" style="height:420px;" scrollY="true">
       <ion-list *ngFor="let row of schedule">
         <ion-item-divider color="them" style="font-size:20px;text-align:center"> Comida Nº {{row.id}}</ion-item-divider>
         <ion-item id="horario-range1">
