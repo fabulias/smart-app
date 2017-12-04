@@ -33,7 +33,10 @@ export class SchedulePage implements OnInit {
 
   sendSchedule() {
     if (<string>this.network.type == "none") {
-      this.showToastWithCloseButton('middle', 'Revisa tu conexión a Internet')
+      this.showToast('middle', 'Revisa tu conexión a Internet, se enviará el horario al reestablecer conexión');
+      this.storage.set('enqueue_data',true);
+      if (this.schedule)
+        this.storage.set('data', this.schedule);
     } else {
       this.sendLoading();
       this.scheduleProvider
@@ -191,6 +194,15 @@ export class SchedulePage implements OnInit {
     const toast = this.toastCtrl.create({
       message: msg,
       duration: 1000,
+      position: positionString,
+      cssClass: "home.scss"
+    });
+    toast.present();
+  }
+  showToast(positionString: string, msg: string) {
+    const toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2500,
       position: positionString,
       cssClass: "home.scss"
     });

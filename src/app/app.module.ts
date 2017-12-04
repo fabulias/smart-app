@@ -58,7 +58,8 @@ import { SchedulePipe } from '../pipes/schedule/schedule';
     ScheduleProvider,
     HomeProvider,
     Network,
-    Push
+    Push,
+    
   ]
 })
 export class AppModule { }

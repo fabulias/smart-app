@@ -1,20 +1,52 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, LoadingController,ToastController, AlertController } from 'ionic-angular';
 import { SchedulePage } from '../schedule/schedule';
 import { HomeProvider } from '../../providers/home/home';
-
+import { Storage } from '@ionic/storage';
+import { Schedule } from '../../models/schedule';
 import { Network } from '@ionic-native/network';
+import { ScheduleProvider } from '../../providers/schedule/schedule';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  index: number;
   serve_state: boolean;  //current state
   private toggleOnOff: boolean;
   constructor(public navCtrl: NavController, public homeProvider: HomeProvider,
-    private toastCtrl: ToastController, private network: Network) {
-
+    private toastCtrl: ToastController, public network: Network, public alertCtrl: AlertController,
+    public storage: Storage, public scheduleProvider: ScheduleProvider, public loadingCtrl:LoadingController) {
+    
+    let connectSubscription = this.network.onConnect().subscribe(() => {
+        this.storage.get('enqueue_data').then(data =>{ this.index=data;
+          debugger;
+        if(this.index){   
+           let schedule_; 
+           this.storage.get('data').then(data=> {
+             schedule_=data;
+             this.sendLoading();
+                this.scheduleProvider
+                  .sendSchedule(schedule_)
+                  .subscribe(data => {
+                    if (data) {
+                      this.showToastWithCloseButton('middle', 'Horario guardado')
+                    } else {
+                      this.showToastWithCloseButton('middle', 'Ups! SmartFeedr desconectado');
+                    }
+                  });
+           });
+        } 
+      });
+      })
+  }
+  sendLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Asignando horarios pendientes",
+      duration: 1500
+    });
+    loader.present();
   }
   ngOnInit() {
     if (<string>this.network.type == "none") {
