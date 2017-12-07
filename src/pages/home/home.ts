@@ -21,7 +21,6 @@ export class HomePage {
     
     let connectSubscription = this.network.onConnect().subscribe(() => {
         this.storage.get('enqueue_data').then(data =>{ this.index=data;
-          debugger;
         if(this.index){   
            let schedule_; 
            this.storage.get('data').then(data=> {
