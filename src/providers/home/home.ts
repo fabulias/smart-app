@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class HomeProvider {
-  url = 'http://farid.docencia.me/';
+  url = 'http://192.168.43.226:9002/';
   constructor(public http: Http) {
 
   }

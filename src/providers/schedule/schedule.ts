@@ -13,7 +13,7 @@ import { Schedule, scheduleService } from '../../models/schedule';
 @Injectable()
 export class ScheduleProvider {
   index: number;
-  url = 'http://farid.docencia.me/information';
+  url = 'http://192.168.43.226:9002/information';
   constructor(public http: Http, public storage: Storage) {
 
   }
